@@ -16,18 +16,19 @@ export default function Categories({ items, onClick }) {
           >
             Все
           </li>
-          {items.map((item, i) => (
-            <li
-              className={activeCategory === i ? 'active' : ''}
-              key={`${item}_${i}`}
-              onClick={() => {
-                setActiveCategory(i);
-                onClick(item);
-              }}
-            >
-              {item}
-            </li>
-          ))}
+          {items &&
+            items.map((item, i) => (
+              <li
+                className={activeCategory === i ? 'active' : ''}
+                key={`${item}_${i}`}
+                onClick={() => {
+                  setActiveCategory(i);
+                  onClick(item);
+                }}
+              >
+                {item}
+              </li>
+            ))}
         </ul>
       </div>
     </div>
