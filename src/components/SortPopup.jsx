@@ -26,7 +26,6 @@ function SortPopup({ items }) {
 
   useEffect(() => {
     document.body.addEventListener('click', handleOutsideClick);
-    console.log(sortRef);
     return () => {
       document.body.removeEventListener('click', handleOutsideClick);
     };
