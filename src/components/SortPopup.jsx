@@ -4,7 +4,7 @@ function SortPopup({ items }) {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [activeFilter, setActiveFilter] = useState(0);
   const sortRef = useRef();
-  const activeLabel = items[activeFilter];
+  const activeLabel = items[activeFilter].name;
 
   // при ререндере ссылка на функцию сохраняется и ререндера не будет
   // как в случае если передавать в онклик анонимную функцию
@@ -53,17 +53,18 @@ function SortPopup({ items }) {
       {isPopupVisible && (
         <div className="sort__popup">
           <ul>
-            {items.map((item, i) => {
-              return (
-                <li
-                  className={activeFilter === i ? 'active' : ''}
-                  key={`${item}_${i}`}
-                  onClick={() => onItemClick(i)}
-                >
-                  {item}
-                </li>
-              );
-            })}
+            {items &&
+              items.map((obj, i) => {
+                return (
+                  <li
+                    className={activeFilter === i ? 'active' : ''}
+                    key={`${obj.type}_${i}`}
+                    onClick={() => onItemClick(i)}
+                  >
+                    {obj.name}
+                  </li>
+                );
+              })}
           </ul>
         </div>
       )}
