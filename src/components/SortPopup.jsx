@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-function SortPopup({ items }) {
+// мемоизирую компонент для избежания ререндера
+const SortPopup = React.memo(({ items }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [activeFilter, setActiveFilter] = useState(0);
   const sortRef = useRef();
@@ -70,6 +71,6 @@ function SortPopup({ items }) {
       )}
     </div>
   );
-}
+});
 
 export default SortPopup;

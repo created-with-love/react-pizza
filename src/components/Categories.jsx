@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 
-export default function Categories({ items, onClick }) {
+// мемоизирую компонент для устранения ререндера
+const Categories = React.memo(({ items, onClick }) => {
   const [activeCategory, setActiveCategory] = useState(null);
+
+  const onSelectItem = index => {
+    setActiveCategory(index);
+    onClick(index);
+  };
 
   return (
     <div>
       <div className="categories">
         <ul className="categories-list">
           <li
-            onClick={e => {
-              setActiveCategory(null);
-              onClick(e.target.textContent);
-            }}
+            onClick={() => onSelectItem(null)}
             className={activeCategory === null ? 'active' : ''}
           >
             Все
@@ -21,10 +24,7 @@ export default function Categories({ items, onClick }) {
               <li
                 className={activeCategory === i ? 'active' : ''}
                 key={`${item}_${i}`}
-                onClick={() => {
-                  setActiveCategory(i);
-                  onClick(item);
-                }}
+                onClick={() => onSelectItem(i)}
               >
                 {item}
               </li>
@@ -33,7 +33,9 @@ export default function Categories({ items, onClick }) {
       </div>
     </div>
   );
-}
+});
+
+export default Categories;
 
 // export default class Categories extends React.Component {
 //   state = {
