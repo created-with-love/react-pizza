@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 function PizzaBlock({ pizza }) {
   const { imageUrl, name, types, sizes, price } = pizza;
+
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [activeType, setActiveType] = useState(types[0]);
   const [pizzaCount, setPizzaCount] = useState(0);

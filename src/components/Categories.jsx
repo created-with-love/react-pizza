@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // мемоизирую компонент для устранения ререндера
-const Categories = React.memo(({ items, onClick }) => {
-  const [activeCategory, setActiveCategory] = useState(null);
-
-  const onSelectItem = index => {
-    setActiveCategory(index);
-    onClick(index);
-  };
-
+const Categories = React.memo(({ activeCategory, items, onCategoryClick }) => {
   return (
     <div>
       <div className="categories">
         <ul className="categories-list">
           <li
-            onClick={() => onSelectItem(null)}
+            onClick={() => onCategoryClick(null)}
             className={activeCategory === null ? 'active' : ''}
           >
             Все
@@ -24,7 +18,7 @@ const Categories = React.memo(({ items, onClick }) => {
               <li
                 className={activeCategory === i ? 'active' : ''}
                 key={`${item}_${i}`}
-                onClick={() => onSelectItem(i)}
+                onClick={() => onCategoryClick(i)}
               >
                 {item}
               </li>
@@ -35,39 +29,14 @@ const Categories = React.memo(({ items, onClick }) => {
   );
 });
 
+Categories.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onCategoryClick: PropTypes.func,
+};
+
+Categories.defaultProps = {
+  activeCategory: null,
+  items: [],
+};
+
 export default Categories;
-
-// export default class Categories extends React.Component {
-//   state = {
-//     activeItem: null,
-//   };
-
-//   onSelectItem = index => {
-//     this.setState({ activeItem: index });
-//   };
-
-//   render() {
-//     const { items, onClick } = this.props;
-//     return (
-//       <div>
-//         <div className="categories">
-//           <ul className="categories-list">
-//             <li className="active">Все</li>
-//             {items.map((item, i) => (
-//               <li
-//                 className={this.state.activeItem === i ? 'active' : ''}
-//                 key={`${item}_${i}`}
-//                 onClick={() => {
-//                   this.onSelectItem(i);
-//                   onClick(item);
-//                 }}
-//               >
-//                 {item}
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//       </div>
-//     );
-//   }
-// }

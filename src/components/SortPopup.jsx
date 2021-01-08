@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 // мемоизирую компонент для избежания ререндера
-const SortPopup = React.memo(({ items }) => {
+const SortPopup = React.memo(({ activeSortType, onClickSortType, items }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
-  const [activeFilter, setActiveFilter] = useState(0);
   const sortRef = useRef();
-  const activeLabel = items[activeFilter].name;
+  const activeLabel = items.find(obj => obj.type === activeSortType).name;
 
   // при ререндере ссылка на функцию сохраняется и ререндера не будет
   // как в случае если передавать в онклик анонимную функцию
@@ -20,9 +20,9 @@ const SortPopup = React.memo(({ items }) => {
     }
   };
 
-  const onItemClick = index => {
-    setActiveFilter(index);
-    toggleVisiblePopup();
+  const onItemClick = type => {
+    onClickSortType(type);
+    setPopupVisible(false);
   };
 
   useEffect(() => {
@@ -58,9 +58,9 @@ const SortPopup = React.memo(({ items }) => {
               items.map((obj, i) => {
                 return (
                   <li
-                    className={activeFilter === i ? 'active' : ''}
+                    className={activeSortType === obj.type ? 'active' : ''}
                     key={`${obj.type}_${i}`}
-                    onClick={() => onItemClick(i)}
+                    onClick={() => onItemClick(obj)}
                   >
                     {obj.name}
                   </li>
@@ -72,5 +72,15 @@ const SortPopup = React.memo(({ items }) => {
     </div>
   );
 });
+
+SortPopup.propTypes = {
+  activeSortType: PropTypes.string,
+  onClickSortType: PropTypes.func.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+SortPopup.defaultProps = {
+  items: [],
+};
 
 export default SortPopup;
