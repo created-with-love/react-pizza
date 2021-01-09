@@ -67,7 +67,7 @@ function PizzaBlock({ onClickAddPizza, addedPizzaCount, pizza }) {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {price} ₽</div>
+        <div className="pizza-block__price">от {price} ₴.</div>
         <Button className="button--add" onClick={handleAddPizza} outline>
           <svg
             width="12"

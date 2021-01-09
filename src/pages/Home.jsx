@@ -11,7 +11,7 @@ import { fetchPizzas } from '../redux/actions/pizzas';
 import { addPizzaToCart } from '../redux/actions/cart';
 
 // выношу данные для устранения их перезаписи и ререндера
-const categories = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+const categories = ['Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Другие'];
 const sortItems = [
   { name: 'популярности', type: 'popular', order: 'desc' },
   { name: 'цене', type: 'price', order: 'desc' },
