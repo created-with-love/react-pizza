@@ -8,6 +8,7 @@ import {
 } from '../components';
 import { setCategory, setSortBy } from '../redux/actions/filters';
 import { fetchPizzas } from '../redux/actions/pizzas';
+import { addPizzaToCart } from '../redux/actions/cart';
 
 // выношу данные для устранения их перезаписи и ререндера
 const categories = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
@@ -22,13 +23,14 @@ function Home() {
   const dispatch = useDispatch();
 
   // useSelector получает доступ к нашему хранилищу redux
+  const { category, sortBy } = useSelector(({ filters }) => filters);
+  const cartItems = useSelector(({ cart }) => cart.items);
   const { items, isLoaded } = useSelector(
     ({ pizzas }) => pizzas,
     // возвращая только конкретные нужные свойства со стейта мы страхуем себя от лишнего ререндера
     // который может быть если вытаскивать целый обьект со всеми свойствами (какое-то изменится = ререндер)
     // Так же лучше прокидывать детям пропсами инфу, чем исп-ть useSelector повторно в них
   );
-  const { category, sortBy } = useSelector(({ filters }) => filters);
 
   // получаю и отправляю все пиццы в редакс
   React.useEffect(() => {
@@ -44,6 +46,10 @@ function Home() {
 
   const onSelectSortType = React.useCallback(type => {
     dispatch(setSortBy(type));
+  }, []);
+
+  const handleAddPizzaToCart = React.useCallback(cartObj => {
+    dispatch(addPizzaToCart(cartObj));
   }, []);
 
   return (
@@ -64,7 +70,18 @@ function Home() {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoaded
-          ? items.map(obj => <PizzaBlock pizza={obj} key={obj.id} />)
+          ? items.map(obj => {
+              return (
+                <PizzaBlock
+                  key={obj.id}
+                  onClickAddPizza={handleAddPizzaToCart}
+                  addedPizzaCount={
+                    cartItems[obj.id] ? cartItems[obj.id].length : 0
+                  }
+                  pizza={obj}
+                />
+              );
+            })
           : Array(12)
               .fill(0)
               .map((_, i) => <PizzaLoadingBlock key={i} />)}

@@ -15,7 +15,12 @@ const SortPopup = React.memo(({ activeSortType, onClickSortType, items }) => {
 
   //  path содержит массив всех элементов (всплытие) дом-элементов по которым был клик
   const handleOutsideClick = e => {
-    if (!e.path.includes(sortRef.current)) {
+    // e.path и его аналог для браузера firefox
+    const path =
+      e.path ||
+      (e.composedPath && e.composedPath()) ||
+      e.composedPath(e.target);
+    if (!path.includes(sortRef.current)) {
       setPopupVisible(false);
     }
   };

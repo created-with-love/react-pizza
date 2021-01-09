@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // мемоизирую компонент для устранения ререндера
-const Categories = React.memo(({ activeCategory, items, onCategoryClick }) => {
+const Categories = React.memo(({ onCategoryClick, activeCategory, items }) => {
   return (
     <div>
       <div className="categories">
