@@ -25,8 +25,6 @@ const cart = (state = initialState, action) => {
         0,
       );
 
-      console.log(allPizzasArr);
-
       return {
         ...state,
         items: newItems,
