@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-export default function Button({ className, children, onClick, outline }) {
+export default function Button({ onClick, className, outline, children }) {
   return (
     <button
       onClick={onClick}
@@ -19,4 +19,5 @@ export default function Button({ className, children, onClick, outline }) {
 
 Button.propTypes = {
   onClick: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };

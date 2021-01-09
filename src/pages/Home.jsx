@@ -76,7 +76,7 @@ function Home() {
                   key={obj.id}
                   onClickAddPizza={handleAddPizzaToCart}
                   addedPizzaCount={
-                    cartItems[obj.id] ? cartItems[obj.id].length : 0
+                    cartItems[obj.id] ? cartItems[obj.id].items.length : 0
                   }
                   pizza={obj}
                 />
